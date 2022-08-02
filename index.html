@@ -12,16 +12,35 @@
         href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&family=Titillium+Web:wght@200;400;600&display=swap">
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/global.css" />
-    <title>Web App</title>
+    <title>Poll Tracker</title>
 </head>
 
 <body>
     <header>
         <img src="/assets/html_css_js.png">
-        <h1>Web App</h1>
+        <h1>Poll Tracker</h1>
     </header>
 
     <main>
+        <section id="current-poll" class = "current-poll">
+            <h2>Current Poll</h2>
+            <button id="option-one-button">Option 1</button>
+            <div id = "option-one-counter">0</div>
+            <button id="option-two-button">Option 2</button>
+            <div id="option-two-counter">0</div>
+        </section>
+        <form id="poll-form" class="poll-form">
+            <h3>Create a Poll</h3>
+            <label>Question:</label>
+            <input name="question-input" class="input">
+            <label>Option 1:</label>
+            <input name="option-one-input" class="input">
+            <label>Option 2:</label>
+            <input name="option-two-input" class="input">
+            <button id="start-poll-button" class="button">
+                Start Poll
+            </button>
+        </form>
 
     </main>
 
