@@ -4,8 +4,6 @@ const plusOptionOneButtonEl = document.querySelector('#plus-option-one-button');
 const minusOptionOneButtonEl = document.querySelector('#minus-option-one-button');
 const plusOptionTwoButtonEl = document.querySelector('#plus-option-two-button');
 const minusOptionTwoButtonEl = document.querySelector('#minus-option-two-button');
-const optionOneCounterEl = document.querySelector('#option-one-counter');
-const optionTwoCounterEl = document.querySelector('#option-two-counter');
 const publishPollButtonEl = document.querySelector('#publish-poll-button');
 const pastPollsEl = document.querySelector('#past-polls');
 
@@ -14,38 +12,40 @@ let optionTwoCounter = 0;
 let pastPollsCounter = 0;
 let currentPoll = {};
 let pastPolls = [];
-let pastPollsStats = []
+let pastPollsStats = [];
 
 pollForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    clearOptionCounters();
     currentPoll = new FormData(pollForm);
     displayCurrentPoll(renderPoll(currentPoll));
     pollForm.reset();
+
 });
 
 plusOptionOneButtonEl.addEventListener('click', () => {
-    optionOneCounterEl.textContent = '';
+    // optionOneCounterEl.textContent = '';
     optionOneCounter++;
     displayCurrentPoll();
 });
 
 minusOptionOneButtonEl.addEventListener('click', () => {
     if (optionOneCounter > 0) {
-        optionOneCounterEl.textContent = '';
+        // optionOneCounterEl.textContent = '';
         optionOneCounter--;
         displayCurrentPoll();
     }
 });
 
 plusOptionTwoButtonEl.addEventListener('click', () => {
-    optionTwoCounterEl.textContent = '';
+    // optionTwoCounterEl.textContent = '';
     optionTwoCounter++;
     displayCurrentPoll();
 });
 
 minusOptionTwoButtonEl.addEventListener('click', () => {
     if (optionTwoCounter > 0) {
-        optionTwoCounterEl.textContent = '';
+        // optionTwoCounterEl.textContent = '';
         optionTwoCounter--;
         displayCurrentPoll();
     }
@@ -54,11 +54,11 @@ minusOptionTwoButtonEl.addEventListener('click', () => {
 publishPollButtonEl.addEventListener('click', () => {
     pastPolls.push(currentPoll);
     pastPollsStats.push([optionOneCounter, optionTwoCounter]);
+    currentPoll = {};
     currentPollSpotEl.textContent = '';
     pastPollsEl.textContent = '';
     displayPastPolls();
-    optionOneCounter = 0;
-    optionTwoCounter = 0;
+    // clearOptionCounters();
     displayCurrentPoll();
     currentPollSpotEl.textContent = '';
 });
@@ -86,8 +86,8 @@ function renderPoll(poll) {
 function displayCurrentPoll() {
     currentPollSpotEl.textContent = '';
     currentPollSpotEl.append(renderPoll(currentPoll));
-    optionOneCounterEl.textContent = optionOneCounter;
-    optionTwoCounterEl.textContent = optionTwoCounter;
+    // optionOneCounterEl.textContent = optionOneCounter;
+    // optionTwoCounterEl.textContent = optionTwoCounter;
 }
 
 function displayPastPolls() {
@@ -103,4 +103,9 @@ function displayPastPolls() {
     }
 
     pastPollsCounter = 0;
+}
+
+function clearOptionCounters() {
+    optionOneCounter = 0;
+    optionTwoCounter = 0;
 }
