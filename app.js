@@ -5,9 +5,11 @@ const optionTwoButtonEl = document.querySelector('#option-two-button');
 const optionOneCounterEl = document.querySelector('#option-one-counter');
 const optionTwoCounterEl = document.querySelector('#option-two-counter');
 const publishPollButtonEl = document.querySelector('#publish-poll-button');
+const pastPollsEl = document.querySelector('#past-polls');
 
 let optionOneCounter = 0;
 let optionTwoCounter = 0;
+let pastPollsCounter = 0;
 let currentPoll = {};
 let pastPolls = [];
 
@@ -15,25 +17,29 @@ pollForm.addEventListener('submit', (e) => {
     e.preventDefault();
     currentPoll = new FormData(pollForm);
     displayCurrentPoll(renderPoll(currentPoll));
-    console.log(currentPoll.get('question-input'));
+    pollForm.reset();
 });
 
 optionOneButtonEl.addEventListener('click', () => {
     optionOneCounterEl.textContent = '';
     optionOneCounter++;
-    optionOneCounterEl.textContent = optionOneCounter;
     displayCurrentPoll();
 });
 
 optionTwoButtonEl.addEventListener('click', () => {
     optionTwoCounterEl.textContent = '';
     optionTwoCounter++;
-    optionTwoCounterEl.textContent = optionTwoCounter;
     displayCurrentPoll();
 });
 
 publishPollButtonEl.addEventListener('click', () => {
     pastPolls.push(currentPoll);
+    currentPollSpotEl.textContent = '';
+    pastPollsEl.textContent = '';
+    displayPastPolls();
+    optionOneCounter = 0;
+    optionTwoCounter = 0;
+    displayCurrentPoll();
     currentPollSpotEl.textContent = '';
 });
 
@@ -60,8 +66,19 @@ function renderPoll(poll) {
 function displayCurrentPoll() {
     currentPollSpotEl.textContent = '';
     currentPollSpotEl.append(renderPoll(currentPoll));
+    optionOneCounterEl.textContent = optionOneCounter;
+    optionTwoCounterEl.textContent = optionTwoCounter;
 }
 
 function displayPastPolls() {
-    
+
+    for (let poll of pastPolls) {
+        pastPollsCounter++;
+        const pollCountEl = document.createElement('h3');
+        pollCountEl.textContent =`Poll #${pastPollsCounter}`;
+        pastPollsEl.append(pollCountEl);
+        pastPollsEl.append(renderPoll(poll));
+    }
+
+    pastPollsCounter = 0;
 }
