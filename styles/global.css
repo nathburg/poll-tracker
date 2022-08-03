@@ -34,5 +34,29 @@ footer {
     background-color: var(--footer-background);
 }
 
-.poll-form {;
+.current-poll {
+}
+
+.start-button {
+
+}
+
+.poll-container {
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.two-cell {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.grid-cell  {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top {
+    display: center;
 }
