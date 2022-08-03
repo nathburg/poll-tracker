@@ -22,30 +22,42 @@
     </header>
 
     <main>
-        <h2>Current Poll</h2>
-        <section id="current-poll" class = "current-poll">
+        <section class="top">
+            <h2>Current Poll</h2>
+            <section id="current-poll" class = "current-poll">
+            </section>
+            <div class="poll-container">
+                <div class="grid-cell">
+                    <button id="plus-option-one-button">+ Option One</button><br>
+                    <button id="minus-option-one-button">- Option One</button>
+                </div>
+                <div class="grid-cell">    
+                    <button id="plus-option-two-button">+ Option Two</button><br>
+                    <button id="minus-option-two-button">- Option Two</button>
+                </div>
+            </div>
+            <button id="publish-poll-button">Publish Poll</button>
+            <form id="poll-form" class="poll-form">
+                <h3>Create a Poll</h3>
+                <div>
+                    <label>Question:</label>
+                    <input name="question-input" class="input">
+                </div>
+                <div>
+                    <label>Option 1:</label>
+                    <input name="option-one-input" class="input">
+                </div>
+                <div>    
+                    <label>Option 2:</label>
+                    <input name="option-two-input" class="input">
+                </div>
+                <button id="start-poll-button" class="start-button">
+                    Start Poll
+                </button>
+            </form>
         </section>
-        <button id="plus-option-one-button">+ Option One</button>
-        <button id="minus-option-one-button">- Option One</button>
-        <!-- <div id = "option-one-counter"></div> -->
-        <button id="plus-option-two-button">+ Option Two</button>
-        <button id="minus-option-two-button">- Option Two</button>
-        <!-- <div id="option-two-counter"></div> -->
-        <button id="publish-poll-button">Publish Poll</button>
-        <form id="poll-form" class="poll-form">
-            <h3>Create a Poll</h3>
-            <label>Question:</label>
-            <input name="question-input" class="input">
-            <label>Option 1:</label>
-            <input name="option-one-input" class="input">
-            <label>Option 2:</label>
-            <input name="option-two-input" class="input">
-            <button id="start-poll-button" class="button">
-                Start Poll
-            </button>
-        </form>
+        <h2>Past Polls</h2>
         <section id="past-polls">
-            <h2>Past Polls</h2>
         </section>
 
     </main>

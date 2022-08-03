@@ -14,13 +14,15 @@ let currentPoll = {};
 let pastPolls = [];
 let pastPollsStats = [];
 
+publishPollButtonEl.disabled = true;
+
 pollForm.addEventListener('submit', (e) => {
     e.preventDefault();
     clearOptionCounters();
     currentPoll = new FormData(pollForm);
     displayCurrentPoll(renderPoll(currentPoll));
     pollForm.reset();
-
+    publishPollButtonEl.disabled = false;
 });
 
 plusOptionOneButtonEl.addEventListener('click', () => {
@@ -52,6 +54,7 @@ minusOptionTwoButtonEl.addEventListener('click', () => {
 });
 
 publishPollButtonEl.addEventListener('click', () => {
+    publishPollButtonEl.disabled = true;
     pastPolls.push(currentPoll);
     pastPollsStats.push([optionOneCounter, optionTwoCounter]);
     currentPoll = {};
@@ -61,16 +64,17 @@ publishPollButtonEl.addEventListener('click', () => {
     // clearOptionCounters();
     displayCurrentPoll();
     currentPollSpotEl.textContent = '';
+
 });
 
 function renderPoll(poll) {
 
     const newPoll = document.createElement('div');
-    const questionEl = document.createElement('p');
-    const optionOneEl = document.createElement('p');
-    const optionOneVotesEl = document.createElement('p');
-    const optionTwoEl = document.createElement('p');
-    const optionTwoVotesEl = document.createElement('p');
+    const questionEl = document.createElement('div');
+    const optionOneEl = document.createElement('div');
+    const optionOneVotesEl = document.createElement('div');
+    const optionTwoEl = document.createElement('div');
+    const optionTwoVotesEl = document.createElement('div');
 
     questionEl.textContent = `Question: ${poll.get('question-input')}`;
     optionOneEl.textContent = `Option One: ${poll.get('option-one-input')}`;
@@ -78,6 +82,8 @@ function renderPoll(poll) {
     optionTwoEl.textContent = `Option Two: ${poll.get('option-two-input')}`;
     optionTwoVotesEl.textContent = `Option Two has ${optionTwoCounter} votes.`;
     
+    
+
     newPoll.append(questionEl, optionOneEl, optionOneVotesEl, optionTwoEl, optionTwoVotesEl);
 
     return newPoll;
