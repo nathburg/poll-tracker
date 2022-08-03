@@ -97,7 +97,7 @@ function displayPastPolls() {
         optionTwoCounter = pastPollsStats[pastPollsCounter][1];
         pastPollsCounter++;
         const pollCountEl = document.createElement('h3');
-        pollCountEl.textContent =`Poll #${pastPollsCounter}`;
+        pollCountEl.textContent = `Poll #${pastPollsCounter}`;
         pastPollsEl.append(pollCountEl);
         pastPollsEl.append(renderPoll(poll));
     }
