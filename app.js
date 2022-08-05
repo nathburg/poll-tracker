@@ -7,48 +7,47 @@ const minusOptionTwoButtonEl = document.querySelector('#minus-option-two-button'
 const publishPollButtonEl = document.querySelector('#publish-poll-button');
 const pastPollsEl = document.querySelector('#past-polls');
 
-let optionOneCounter = 0;
-let optionTwoCounter = 0;
 let pastPollsCounter = 0;
 let currentPoll = {};
 let pastPolls = [];
-let pastPollsStats = [];
 
 publishPollButtonEl.disabled = true;
 
 pollForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    clearOptionCounters();
-    currentPoll = new FormData(pollForm);
+    const data = new FormData(pollForm);
+    currentPoll = {
+        question: data.get('question-input'),
+        optionOne: data.get('option-one-input'),
+        optionTwo: data.get('option-two-input'),
+        optionOneVotes: 0,
+        optionTwoVotes: 0
+    };
     displayCurrentPoll(renderPoll(currentPoll));
     pollForm.reset();
     publishPollButtonEl.disabled = false;
 });
 
 plusOptionOneButtonEl.addEventListener('click', () => {
-    // optionOneCounterEl.textContent = '';
-    optionOneCounter++;
+    currentPoll.optionOneVotes++;
     displayCurrentPoll();
 });
 
 minusOptionOneButtonEl.addEventListener('click', () => {
-    if (optionOneCounter > 0) {
-        // optionOneCounterEl.textContent = '';
-        optionOneCounter--;
+    if (currentPoll.optionOneVotes > 0) {
+        currentPoll.optionOneVotes--;
         displayCurrentPoll();
     }
 });
 
 plusOptionTwoButtonEl.addEventListener('click', () => {
-    // optionTwoCounterEl.textContent = '';
-    optionTwoCounter++;
+    currentPoll.optionTwoVotes++;
     displayCurrentPoll();
 });
 
 minusOptionTwoButtonEl.addEventListener('click', () => {
-    if (optionTwoCounter > 0) {
-        // optionTwoCounterEl.textContent = '';
-        optionTwoCounter--;
+    if (currentPoll.optionTwoVotes > 0) {
+        currentPoll.optionTwoVotes--;
         displayCurrentPoll();
     }
 });
@@ -56,7 +55,6 @@ minusOptionTwoButtonEl.addEventListener('click', () => {
 publishPollButtonEl.addEventListener('click', () => {
     publishPollButtonEl.disabled = true;
     pastPolls.push(currentPoll);
-    pastPollsStats.push([optionOneCounter, optionTwoCounter]);
     currentPoll = {};
     currentPollSpotEl.textContent = '';
     pastPollsEl.textContent = '';
@@ -69,38 +67,34 @@ publishPollButtonEl.addEventListener('click', () => {
 
 function renderPoll(poll) {
 
-    const newPoll = document.createElement('div');
+    const newPollEl = document.createElement('div');
     const questionEl = document.createElement('div');
     const optionOneEl = document.createElement('div');
     const optionOneVotesEl = document.createElement('div');
     const optionTwoEl = document.createElement('div');
     const optionTwoVotesEl = document.createElement('div');
 
-    questionEl.textContent = `Question: ${poll.get('question-input')}`;
-    optionOneEl.textContent = `Option One: ${poll.get('option-one-input')}`;
-    optionOneVotesEl.textContent = `Option One has ${optionOneCounter} votes.`;
-    optionTwoEl.textContent = `Option Two: ${poll.get('option-two-input')}`;
-    optionTwoVotesEl.textContent = `Option Two has ${optionTwoCounter} votes.`;
+    questionEl.textContent = `Question: ${poll.question}`;
+    optionOneEl.textContent = `Option One: ${poll.optionOne}`;
+    optionOneVotesEl.textContent = `Option One has ${poll.optionOneVotes} votes.`;
+    optionTwoEl.textContent = `Option Two: ${poll.optionTwo}`;
+    optionTwoVotesEl.textContent = `Option Two has ${poll.optionTwoVotes} votes.`;
     
     
 
-    newPoll.append(questionEl, optionOneEl, optionOneVotesEl, optionTwoEl, optionTwoVotesEl);
+    newPollEl.append(questionEl, optionOneEl, optionOneVotesEl, optionTwoEl, optionTwoVotesEl);
 
-    return newPoll;
+    return newPollEl;
 }
 
 function displayCurrentPoll() {
     currentPollSpotEl.textContent = '';
     currentPollSpotEl.append(renderPoll(currentPoll));
-    // optionOneCounterEl.textContent = optionOneCounter;
-    // optionTwoCounterEl.textContent = optionTwoCounter;
 }
 
 function displayPastPolls() {
 
     for (let poll of pastPolls) {
-        optionOneCounter = pastPollsStats[pastPollsCounter][0];
-        optionTwoCounter = pastPollsStats[pastPollsCounter][1];
         pastPollsCounter++;
         const pollCountEl = document.createElement('h3');
         pollCountEl.textContent = `Poll #${pastPollsCounter}`;
@@ -109,9 +103,4 @@ function displayPastPolls() {
     }
 
     pastPollsCounter = 0;
-}
-
-function clearOptionCounters() {
-    optionOneCounter = 0;
-    optionTwoCounter = 0;
 }
